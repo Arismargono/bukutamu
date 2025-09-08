@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "bash vercel-build.sh",
+        "outputDirectory": "dist"
+      }
+    },
+    {
+      "src": "api/[[...path]].js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/[[...path]].js"
+    },
+    {
+      "src": "/photos/(.*)",
+      "dest": "/backend/photos/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
+  ],
+  "env": {
+    "PORT": "3000"
+  }
+}
